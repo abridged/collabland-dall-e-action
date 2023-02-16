@@ -121,14 +121,12 @@ async function handleButtonInteraction(
       return response;
     }
     case "dall-e-action:shuffle-button": {
-      const response: APIInteractionResponse = {
-        type: InteractionResponseType.ChannelMessageWithSource,
-        data: {
-          content: `OK. Button: ${buttonId} Message ID: ${originalMsgId}`,
-          flags: MessageFlags.Ephemeral,
-        },
+      const image = await CacheService.getImage(originalMsgId);
+      const response = createImageResultResponse(image);
+      return {
+        type: InteractionResponseType.UpdateMessage,
+        data: response,
       };
-      return response;
     }
     case "dall-e-action:cancel-button": {
       const response: APIInteractionResponse = {

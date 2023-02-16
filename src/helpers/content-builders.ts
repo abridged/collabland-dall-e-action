@@ -35,7 +35,7 @@ export const createImageResultResponse = (
     .addComponents(
       new ButtonBuilder()
         .setCustomId("dall-e-action:shuffle-button")
-        .setLabel("Shuffle")
+        .setLabel("Cycle")
         .setStyle(ButtonStyle.Primary)
     )
     .addComponents(

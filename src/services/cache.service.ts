@@ -42,11 +42,14 @@ class CacheService {
   }
   public static async getImage(msgId: string): Promise<ShuffleResponse> {
     const cache = CacheService.getService();
-    const url = (await cache.get(`${msgId}:urls`)) as string;
+    const urls = (await cache.get(`${msgId}:urls`)) as string;
     const counter = +((await cache.get(`${msgId}:counter`)) as string);
+    const parsedCounter = (counter + 1) % 10;
+    const url = urls[parsedCounter];
+    await cache.set(`${msgId}:counter`, parsedCounter);
     return {
       url: url,
-      counter: counter,
+      counter: parsedCounter,
     };
   }
 }

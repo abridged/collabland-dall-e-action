@@ -29,7 +29,7 @@ export class FollowUp {
   }
 
   async editMessage(
-    request: DiscordActionRequest<APIChatInputApplicationCommandInteraction>,
+    request: DiscordActionRequest,
     message: RESTPatchAPIWebhookWithTokenMessageJSONBody,
     messageId = "@original"
   ) {

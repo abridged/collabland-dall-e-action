@@ -90,6 +90,16 @@ async function handleButtonInteraction(
     case "dall-e-action:send-button": {
       const userId = interaction.member?.user.id ?? "";
       const imageUrl = interaction.message.embeds[0]?.image?.url ?? "";
+      const followup = new FollowUp();
+      followup.editMessage(
+        interaction,
+        {
+          content: `Hooray! Your search results are in 🥳`,
+          embeds: [],
+          components: [],
+        },
+        originalMsgId
+      );
       const response: APIInteractionResponse = {
         type: InteractionResponseType.ChannelMessageWithSource,
         data: {
@@ -121,12 +131,12 @@ async function handleButtonInteraction(
       return response;
     }
     case "dall-e-action:cancel-button": {
-      const followup = new FollowUp();
-      followup.deleteMessage(interaction, originalMsgId);
       const response: APIInteractionResponse = {
-        type: InteractionResponseType.ChannelMessageWithSource,
+        type: InteractionResponseType.UpdateMessage,
         data: {
-          content: `Operation Cancelled.`,
+          content: `Operation Cancelled ❌`,
+          embeds: [],
+          components: [],
           flags: MessageFlags.Ephemeral,
         },
       };

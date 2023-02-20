@@ -1,11 +1,9 @@
 import {
   APIActionRowComponent,
   APIButtonComponent,
-  APIInteractionResponse,
   ActionRowBuilder,
   ButtonStyle,
   EmbedBuilder,
-  InteractionResponseType,
   RESTPostAPIWebhookWithTokenJSONBody,
 } from "discord.js";
 import { ShuffleResponse } from "../services/cache.service";

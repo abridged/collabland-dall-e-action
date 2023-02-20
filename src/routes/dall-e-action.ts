@@ -4,12 +4,10 @@ import {
   SignatureVerifier,
   createImageResultResponse,
 } from "../helpers";
-import { debugFactory, sleep } from "@collabland/common";
+import { debugFactory } from "@collabland/common";
 import {
   APIChatInputApplicationCommandInteraction,
-  APIInteraction,
   APIInteractionResponse,
-  APIMessageComponentBaseInteractionData,
   APIMessageComponentButtonInteraction,
   ApplicationCommandOptionType,
   ApplicationCommandType,
@@ -20,8 +18,6 @@ import {
   InteractionResponseType,
   InteractionType,
   MessageFlags,
-  RESTPatchAPIWebhookWithTokenMessageJSONBody,
-  RESTPostAPIWebhookWithTokenJSONBody,
 } from "@collabland/discord";
 import { MiniAppManifest } from "@collabland/models";
 import { CacheService, DallEService } from "../services";
@@ -162,7 +158,6 @@ async function followup(
   const prompt = getCommandOptionValue(request, "prompt");
   const callback = request.actionContext?.callbackUrl;
   if (callback != null) {
-    const interactionId = request.id;
     const images = await DallEService.getImages(prompt ?? "");
     const responseMsg = createImageResultResponse({
       counter: 0,

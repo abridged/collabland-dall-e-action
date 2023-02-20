@@ -1,6 +1,5 @@
 import { getFetch, handleFetchResponse } from "@collabland/common";
 import {
-  APIChatInputApplicationCommandInteraction,
   APIMessage,
   DiscordActionRequest,
   RESTPatchAPIWebhookWithTokenMessageJSONBody,
@@ -46,10 +45,7 @@ export class FollowUp {
     }
   }
 
-  async deleteMessage(
-    request: DiscordActionRequest,
-    messageId = "@original"
-  ) {
+  async deleteMessage(request: DiscordActionRequest, messageId = "@original") {
     const callback = request.actionContext?.callbackUrl;
     if (callback) {
       const res = await fetch(

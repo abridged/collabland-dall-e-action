@@ -10,7 +10,16 @@ import { debugFactory } from "@collabland/common";
 
 const debug = debugFactory("SignatureVerifier");
 
+/**
+ * The SignatureVerifier class is responsible for verifying the webhook signatures sent alongside the payload from the Collab.Land API
+ */
 export class SignatureVerifier {
+  /**
+   * Middleware for verifying signature sent by the Collab.Land API
+   * @param req {Request} The request object
+   * @param res {Response} The response object
+   * @returns Middleware for request signature verification
+   */
   verify(req: Request, res: Response) {
     if (!process.env.SKIP_VERIFICATION) {
       const ecdsaSignature = req.header(ActionEcdsaSignatureHeader);

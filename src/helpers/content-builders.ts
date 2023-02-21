@@ -9,6 +9,11 @@ import {
 import { ShuffleResponse } from "../services/cache.service";
 import { ButtonBuilder } from "discord.js";
 
+/**
+ * Creates the image embed shown as the response
+ * @param data {ShuffleResponse} The data to be shown to the user
+ * @returns {RESTPostAPIWebhookWithTokenJSONBody} The data to be returned via the API call
+ */
 export const createImageResultResponse = (
   data: ShuffleResponse
 ): RESTPostAPIWebhookWithTokenJSONBody => {

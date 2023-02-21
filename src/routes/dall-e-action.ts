@@ -26,6 +26,11 @@ const debug = debugFactory("collab-hello-action-express:action:dall-e");
 
 const router = express.Router();
 
+/**
+ * Handle the interaction, either in the form of Button response or Application command response
+ * @param interaction The Discord interaction
+ * @returns The interaction response
+ */
 async function handle(
   interaction: DiscordActionRequest
 ): Promise<DiscordActionResponse> {
@@ -74,6 +79,11 @@ async function handle(
   }
 }
 
+/**
+ * Handle the button click interaction on the Discord Collab.Land API
+ * @param interaction The Discord interaction object
+ * @returns The response to the Discord interaction API
+ */
 async function handleButtonInteraction(
   interaction: DiscordActionRequest<APIMessageComponentButtonInteraction>
 ): Promise<DiscordActionResponse> {
@@ -148,12 +158,15 @@ async function handleButtonInteraction(
     }
   }
 }
-
+/**
+ * Creates a follow-up message after fetching images from DALL·E 2 and caching them
+ * @param request The Discord interaction request object
+ */
 async function followup(
   request: DiscordActionRequest<APIChatInputApplicationCommandInteraction>
 ) {
   /**
-   * Get the value of `prompt` argument for `/dall-e`
+   * Get the value of `prompt` argument for `/dall-e-action`
    */
   const prompt = getCommandOptionValue(request, "prompt");
   const callback = request.actionContext?.callbackUrl;

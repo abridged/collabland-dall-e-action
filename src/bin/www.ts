@@ -88,6 +88,9 @@ function onListening() {
   const addr = server.address();
   const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr?.port;
   log("Listening on " + bind);
+  /**
+   * Initialize services such as the OpenAI service and NodeCache service.
+   */
   DallEService.initService();
   CacheService.initService();
 }

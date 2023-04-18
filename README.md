@@ -13,7 +13,7 @@ To use this Collab Action, follow these steps:
 Run the following command to install the Action dependencies:
 
 ```bash
-npm install or yarn install
+npm install
 ```
 
 ### Set up environment variables
@@ -27,7 +27,7 @@ Create a `.env` file and add your API keys for Collab.Land and Open AI. You can 
 Run the following command to build the project:
 
 ```bash
-npm run build or yarn build
+npm run build
 ```
 
 ### Run the Action locally
@@ -35,7 +35,7 @@ npm run build or yarn build
 Run the following command to start the Action server:
 
 ```bash
-npm run start or yarn start
+npm run start 
 ```
 
 By default, this will start the Action server on port `3000`. You can now make requests to the Action server using the ngrok URL.

@@ -20,7 +20,7 @@ npm install
 
 Create a `.env` file and add your API keys for Collab.Land and Open AI. You can obtain API keys by signing up for the respective services. We've provided a basic structure in the `.env.example` file to help you get started.
 
-> Note: The Collab.Land Action Public API key is not required to run the Collab Action locally if you set skip_verification to `true`, but it is required to deploy the Collab Action to production. This Action Public API key serves to verify that the Collab Action is being used by an authentic Collab.Land user. You can obtain the Public API key from https://api-qa.collab.land/config.
+> Note: The Collab.Land Action Public API key is not required to run the Collab Action locally if you set `SKIP_VERIFICATION` to `true`, but it is required to deploy the Collab Action to production. This Action Public API key serves to verify that the Collab Action is being used by an authentic Collab.Land user. You can obtain the Public API key from https://api-qa.collab.land/config. The following code obtains the API keys automatically through the `SignatureVerifier` class.
 
 ### Build the project
 
@@ -35,7 +35,7 @@ npm run build
 Run the following command to start the Action server:
 
 ```bash
-npm run start 
+npm run start
 ```
 
 By default, this will start the Action server on port `3000`. You can now make requests to the Action server using the ngrok URL.

@@ -12,7 +12,7 @@ dotenv.config();
  * Module dependencies.
  */
 
-const log = debug("collab-hello-action-express:server");
+const log = debug("collab-dall-e-action-express:server");
 
 /**
  * Get port from environment and store in Express.
@@ -28,7 +28,7 @@ app.set("port", port);
 const server = http.createServer(app);
 
 /**
- * Initialize all services, listen on provided port, on all network interfaces.
+ * Initialize all API key services, listen on provided port, on all network interfaces.
  */
 
 Promise.all([SignatureVerifier.initVerifier()])

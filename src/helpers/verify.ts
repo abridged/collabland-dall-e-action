@@ -6,14 +6,50 @@ import {
   ActionEd25519SignatureHeader,
   ActionSignatureTimestampHeader,
 } from "../constants";
-import { debugFactory } from "@collabland/common";
+import {
+  debugFactory,
+  getFetch,
+  handleFetchResponse,
+} from "@collabland/common";
+import { decode } from "bs58";
 
 const debug = debugFactory("SignatureVerifier");
+const fetch = getFetch();
+
+type CollabLandConfig = {
+  jwtPublicKey: string;
+  discordClientId: string;
+  actionEcdsaPublicKey: string;
+  actionEd25519PublicKey: string;
+};
 
 /**
  * The SignatureVerifier class is responsible for verifying the webhook signatures sent alongside the payload from the Collab.Land API
  */
 export class SignatureVerifier {
+  private static ECDSAPublicKey: string;
+  private static ED25519PublicKey: string;
+
+  static async initVerifier() {
+    const apiUrl = `https://api${
+      process.env.NODE_ENV === "production" ? "" : "-qa"
+    }.collab.land/config`;
+    const keysResponse = await fetch(apiUrl);
+    const keys = await handleFetchResponse<CollabLandConfig>(
+      keysResponse,
+      200,
+      {
+        customErrorMessage: `Error in fetching collab.land config from URL: ${apiUrl}`,
+      }
+    );
+    SignatureVerifier.ECDSAPublicKey = keys.actionEcdsaPublicKey;
+    SignatureVerifier.ED25519PublicKey = Buffer.from(
+      decode(keys.actionEd25519PublicKey)
+    ).toString("hex");
+    debug("API URL for Collab.Land Config:", apiUrl);
+    debug("SingatureVerifier Initialized");
+  }
+
   /**
    * Middleware for verifying signature sent by the Collab.Land API
    * @param req {Request} The request object
@@ -28,7 +64,6 @@ export class SignatureVerifier {
         req.header(ActionSignatureTimestampHeader) ?? "0"
       );
       const body = JSON.stringify(req.body);
-      const publicKey = this.getPublicKey();
       const signature = ecdsaSignature ?? ed25519Signature;
       if (!signature) {
         res.status(401);
@@ -37,6 +72,8 @@ export class SignatureVerifier {
         });
         return;
       }
+      const signatureType = signature === ecdsaSignature ? "ecdsa" : "ed25519";
+      const publicKey = this.getPublicKey(signatureType);
       if (!publicKey) {
         res.status(401);
         res.send({
@@ -44,7 +81,6 @@ export class SignatureVerifier {
         });
         return;
       }
-      const signatureType = signature === ecdsaSignature ? "ecdsa" : "ed25519";
 
       this.verifyRequest(
         body,
@@ -72,8 +108,10 @@ export class SignatureVerifier {
     };
   }
 
-  private getPublicKey() {
-    return process.env.COLLABLAND_ACTION_PUBLIC_KEY;
+  private getPublicKey(signatureType: "ecdsa" | "ed25519") {
+    return signatureType === "ecdsa"
+      ? SignatureVerifier.ECDSAPublicKey
+      : SignatureVerifier.ED25519PublicKey;
   }
 
   private verifyRequest(

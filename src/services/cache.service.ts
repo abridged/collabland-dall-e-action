@@ -1,6 +1,6 @@
 import NodeCache from "node-cache";
 import { debugFactory } from "@collabland/common";
-const debug = debugFactory("collab-hello-action-express:services:cache");
+const debug = debugFactory("collab-dall-e-action-express:services:cache");
 import { ImagesResponseDataInner } from "openai";
 
 export interface ShuffleResponse {

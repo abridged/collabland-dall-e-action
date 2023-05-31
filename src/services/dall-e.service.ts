@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import { debugFactory } from "@collabland/common";
-const debug = debugFactory("collab-hello-action-express:services:dall-e");
+const debug = debugFactory("collab-dall-e-action-express:services:dall-e");
 
 /**
  * OpenAI API service used for generating images

@@ -22,7 +22,7 @@ import {
 import { MiniAppManifest } from "@collabland/models";
 import { CacheService, DallEService } from "../services";
 import { EmbedBuilder } from "discord.js";
-const debug = debugFactory("collab-hello-action-express:action:dall-e");
+const debug = debugFactory("collab-dall-e-action-express:action:dall-e");
 
 const router = express.Router();
 

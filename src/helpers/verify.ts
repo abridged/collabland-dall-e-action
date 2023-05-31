@@ -13,7 +13,9 @@ import {
 } from "@collabland/common";
 import { decode } from "bs58";
 
-const debug = debugFactory("SignatureVerifier");
+const debug = debugFactory(
+  "collab-dall-e-action-express:helpers:SignatureVerifier"
+);
 const fetch = getFetch();
 
 type CollabLandConfig = {
